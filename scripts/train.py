@@ -222,7 +222,7 @@ model.layers[0].set_weights([embedding_matrix])
 model.layers[0].trainable = False
 print("Creating model structure completed.")
 
-opt = optimizers.RMSprop(lr=0.01)
+opt = optimizers.RMSprop(lr=0.001)
 
 print("Training model...")
 model.compile(optimizer=opt,
