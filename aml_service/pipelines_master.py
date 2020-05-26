@@ -40,7 +40,8 @@ ws = Workspace.from_config(path=args.path, auth=cli_auth)
 print('done getting workspace!')
 
 print("looking for existing compute target.")
-aml_compute = AmlCompute(ws, args.aml_compute_target)
+# aml_compute = AmlCompute(ws, args.aml_compute_target)
+aml_compute = DatabricksCompute(ws, args.aml_compute_target)
 print("found existing compute target.")
 
 # Create a new runconfig object
@@ -79,11 +80,24 @@ def_blob_store = ws.get_default_datastore()
 train_output = PipelineData('train_output', datastore=def_blob_store)
 print("train_output PipelineData object created")
 
-trainStep = PythonScriptStep(
+# trainStep = PythonScriptStep(
+#     name="train",
+#     script_name="train.py", 
+#     arguments=["--model_name", args.model_name,
+#               "--build_number", args.build_number],
+#     compute_target=aml_compute,
+#     runconfig=run_amlcompute,
+#     source_directory=scripts_folder,
+#     allow_reuse=False
+# )
+
+# Must use DatabricksStep not PythonScriptStep.
+# Read more here: https://docs.microsoft.com/en-us/python/api/azureml-pipeline-steps/azureml.pipeline.steps.databricks_step.databricksstep?view=azure-ml-py
+trainStep = DatabricksStep(
     name="train",
-    script_name="train.py", 
-    arguments=["--model_name", args.model_name,
-              "--build_number", args.build_number],
+    python_script_name="train.py", 
+    python_script_params=["--model_name", args.model_name, 
+                          "--build_number", args.build_number],
     compute_target=aml_compute,
     runconfig=run_amlcompute,
     source_directory=scripts_folder,
@@ -93,18 +107,31 @@ print("trainStep created")
 
 evaluate_output = PipelineData('evaluate_output', datastore=def_blob_store)
 
-evaluateStep = PythonScriptStep(
+# evaluateStep = PythonScriptStep(
+#     name="evaluate",
+#     script_name="evaluate.py", 
+#     arguments=["--model_name", args.model_name,  
+#                "--image_name", args.image_name, 
+#                "--output", evaluate_output],
+#     outputs=[evaluate_output],
+#     compute_target=aml_compute,
+#     runconfig=run_amlcompute,
+#     source_directory=scripts_folder,
+#     allow_reuse=False
+# )
+evaluateStep = DatabricksStep(
     name="evaluate",
-    script_name="evaluate.py", 
-    arguments=["--model_name", args.model_name,  
-               "--image_name", args.image_name, 
-               "--output", evaluate_output],
+    python_script_name="evaluate.py", 
+    python_script_params=["--model_name", args.model_name,
+                          "--image_name", args.image_name,
+                          "--output", evaluate_output],
     outputs=[evaluate_output],
     compute_target=aml_compute,
     runconfig=run_amlcompute,
     source_directory=scripts_folder,
     allow_reuse=False
 )
+
 print("evaluateStep created")
 
 evaluateStep.run_after(trainStep)
