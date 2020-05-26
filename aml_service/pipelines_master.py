@@ -75,22 +75,24 @@ run_amlcompute.target = args.aml_compute_target
 #     'onnxruntime==1.2.0'
 # ])
 
-adbenv = DatabricksSection()
-adbenv.pypi_libraries = [
-    'numpy',
-    'pandas',
-    'tensorflow==2.0.0',
-    'keras==2.3.1',
-    'azureml-sdk',
-    'azureml-dataprep[pandas]',
-    'onnxmltools==1.6.0',
-    'onnxruntime==1.2.0'
-]
+# adbenv = DatabricksSection()
+# adbenv.pypi_libraries = [
+#     'numpy',
+#     'pandas',
+#     'tensorflow==2.0.0',
+#     'keras==2.3.1',
+#     'azureml-sdk',
+#     'azureml-dataprep[pandas]',
+#     'onnxmltools==1.6.0',
+#     'onnxruntime==1.2.0'
+# ]
 
-env = Environment('mcw-mlops-starter-v2-env')
-env.databricks = adbenv
+# env = Environment('mcw-mlops-starter-v2-env')
+# env.databricks = adbenv
 
-run_amlcompute.environment = env
+# run_amlcompute.environment = env
+
+run_amlcompute.load(path='.', name='runconfig.yml')
 
 scripts_folder = 'scripts'
 def_blob_store = ws.get_default_datastore()
