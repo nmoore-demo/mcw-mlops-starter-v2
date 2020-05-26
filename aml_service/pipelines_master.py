@@ -9,7 +9,7 @@ from azureml.core.conda_dependencies import CondaDependencies
 from azureml.core.runconfig import DEFAULT_CPU_IMAGE
 from azureml.data.data_reference import DataReference
 from azureml.pipeline.core import Pipeline, PipelineData
-from azureml.pipeline.steps import PythonScriptStep
+from azureml.pipeline.steps import PythonScriptStep, DatabricksStep
 from azureml.core.authentication import AzureCliAuthentication
 
 
