@@ -87,7 +87,7 @@ adbenv.pypi_libraries = [
     'onnxruntime==1.2.0'
 ]
 
-env = Environment()
+env = Environment('mcw-mlops-starter-v2-env')
 env.databricks = adbenv
 
 run_amlcompute.environment = env
