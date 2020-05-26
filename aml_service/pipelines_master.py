@@ -11,7 +11,7 @@ from azureml.data.data_reference import DataReference
 from azureml.pipeline.core import Pipeline, PipelineData
 from azureml.pipeline.steps import PythonScriptStep, DatabricksStep
 from azureml.core.authentication import AzureCliAuthentication
-from azureml.core.environment import Environment, DockerSection
+from azureml.core.environment import Environment, DatabricksSection
 
 print("In piplines_master.py")
 print("Pipeline SDK-specific imports completed")
