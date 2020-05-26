@@ -12,6 +12,7 @@ from azureml.pipeline.core import Pipeline, PipelineData
 from azureml.pipeline.steps import PythonScriptStep
 from azureml.core.authentication import AzureCliAuthentication
 
+
 print("In piplines_master.py")
 print("Pipeline SDK-specific imports completed")
 # Check core SDK version number
