@@ -132,7 +132,6 @@ evaluateStep = DatabricksStep(
     runconfig=run_amlcompute,
     num_workers=1,
     source_directory=scripts_folder,
-    allow_reuse=False
 )
 
 print("evaluateStep created")
