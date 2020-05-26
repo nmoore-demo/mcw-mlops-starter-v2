@@ -2,7 +2,7 @@ import argparse
 import azureml.core
 from azureml.core import Workspace, Experiment, Run, Datastore
 from azureml.data.azure_storage_datastore import AzureBlobDatastore
-from azureml.core.compute import AmlCompute
+from azureml.core.compute import AmlCompute, DatabricksCompute
 from azureml.core.compute import ComputeTarget
 from azureml.core.runconfig import RunConfiguration
 from azureml.core.conda_dependencies import CondaDependencies
