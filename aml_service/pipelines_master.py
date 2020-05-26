@@ -11,7 +11,7 @@ from azureml.data.data_reference import DataReference
 from azureml.pipeline.core import Pipeline, PipelineData
 from azureml.pipeline.steps import PythonScriptStep, DatabricksStep
 from azureml.core.authentication import AzureCliAuthentication
-
+from azure.ml.core.environment import Environment, DockerSection
 
 print("In piplines_master.py")
 print("Pipeline SDK-specific imports completed")
@@ -48,23 +48,35 @@ print("found existing compute target.")
 # Create a new runconfig object
 run_amlcompute = RunConfiguration()
 
-# Use the cpu_cluster you created above. 
+# # Use the cpu_cluster you created above. 
 run_amlcompute.target = args.aml_compute_target
 
-# Enable Docker
-run_amlcompute.environment.docker.enabled = True
+# # Enable Docker
+# run_amlcompute.environment.docker.enabled = True
 
-# Set Docker base image to the default CPU-based image
-run_amlcompute.environment.docker.base_image = DEFAULT_CPU_IMAGE
+# # Set Docker base image to the default CPU-based image
+# run_amlcompute.environment.docker.base_image = DEFAULT_CPU_IMAGE
 
-# Use conda_dependencies.yml to create a conda environment in the Docker image for execution
-run_amlcompute.environment.python.user_managed_dependencies = False
+# # Use conda_dependencies.yml to create a conda environment in the Docker image for execution
+# run_amlcompute.environment.python.user_managed_dependencies = False
 
-# Auto-prepare the Docker image when used for execution (if it is not already prepared)
-run_amlcompute.auto_prepare_environment = True
+# # Auto-prepare the Docker image when used for execution (if it is not already prepared)
+# run_amlcompute.auto_prepare_environment = True
 
-# Specify CondaDependencies obj, add necessary packages
-run_amlcompute.environment.python.conda_dependencies = CondaDependencies.create(pip_packages=[
+# # Specify CondaDependencies obj, add necessary packages
+# run_amlcompute.environment.python.conda_dependencies = CondaDependencies.create(pip_packages=[
+#     'numpy',
+#     'pandas',
+#     'tensorflow==2.0.0',
+#     'keras==2.3.1',
+#     'azureml-sdk',
+#     'azureml-dataprep[pandas]',
+#     'onnxmltools==1.6.0',
+#     'onnxruntime==1.2.0'
+# ])
+
+adbenv = DatabricksSection()
+adbenv.pypi_libraries = [
     'numpy',
     'pandas',
     'tensorflow==2.0.0',
@@ -73,7 +85,12 @@ run_amlcompute.environment.python.conda_dependencies = CondaDependencies.create(
     'azureml-dataprep[pandas]',
     'onnxmltools==1.6.0',
     'onnxruntime==1.2.0'
-])
+]
+
+env = Environment()
+env.databricks = adbenv
+
+run_amlcompute.environment = env
 
 scripts_folder = 'scripts'
 def_blob_store = ws.get_default_datastore()
@@ -132,6 +149,7 @@ evaluateStep = DatabricksStep(
     runconfig=run_amlcompute,
     num_workers=1,
     source_directory=scripts_folder,
+    allow_reuse=False
 )
 
 print("evaluateStep created")
