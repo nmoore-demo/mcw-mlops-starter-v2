@@ -5,7 +5,7 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 variables:
-  resourcegroup: 'sandbox-ai-rg'
+  resourcegroup: 'test-aml-adb'
   workspace: 'ml-sandbox-ai-dev'
   experiment: 'quick-starts-mlops'
   aml_compute_target: 'tc-01'
