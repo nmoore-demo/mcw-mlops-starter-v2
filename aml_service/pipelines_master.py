@@ -101,6 +101,7 @@ trainStep = DatabricksStep(
                           "--build_number", args.build_number],
     compute_target=aml_compute,
     runconfig=run_amlcompute,
+    num_workers=1,
     source_directory=scripts_folder,
     allow_reuse=False
 )
@@ -129,6 +130,7 @@ evaluateStep = DatabricksStep(
     outputs=[evaluate_output],
     compute_target=aml_compute,
     runconfig=run_amlcompute,
+    num_workers=1,
     source_directory=scripts_folder,
     allow_reuse=False
 )
