@@ -92,7 +92,7 @@ run_amlcompute.target = args.aml_compute_target
 
 # run_amlcompute.environment = env
 
-run_amlcompute.load(path='aml_service', name='runconfig.yaml')
+# run_amlcompute.load(path='aml_service', name='runconfig.yaml')
 
 scripts_folder = 'scripts'
 def_blob_store = ws.get_default_datastore()
@@ -119,7 +119,7 @@ trainStep = DatabricksStep(
     python_script_params=["--model_name", args.model_name, 
                           "--build_number", args.build_number],
     compute_target=aml_compute,
-    runconfig=run_amlcompute,
+#     runconfig=run_amlcompute,
     num_workers=1,
     source_directory=scripts_folder,
     allow_reuse=False
@@ -148,7 +148,7 @@ evaluateStep = DatabricksStep(
                           "--output", evaluate_output],
     outputs=[evaluate_output],
     compute_target=aml_compute,
-    runconfig=run_amlcompute,
+#     runconfig=run_amlcompute,
     num_workers=1,
     source_directory=scripts_folder,
     allow_reuse=False
