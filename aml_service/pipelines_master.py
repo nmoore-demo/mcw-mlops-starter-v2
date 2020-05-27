@@ -92,7 +92,7 @@ run_amlcompute.target = args.aml_compute_target
 
 # run_amlcompute.environment = env
 
-run_amlcompute.load(path='.', name='runconfig.yaml')
+run_amlcompute.load(path='aml_service', name='runconfig.yaml')
 
 scripts_folder = 'scripts'
 def_blob_store = ws.get_default_datastore()
