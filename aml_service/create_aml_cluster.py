@@ -52,7 +52,7 @@ except:
     # https://docs.microsoft.com/en-us/python/api/azureml-core/azureml.core.compute.databrickscompute?view=azure-ml-py#attach-configuration-resource-group-none--workspace-name-none--resource-id-none--access-token----
     db_workspace_name = 'test-aml-adb-workspace'
     db_resource_group = 'test-aml-adb'
-    db_access_token = 'dapiafac44ab1b4203eaf419bb36d5d18af9'
+    db_access_token = '...........................'
 
     provisioning_config = DatabricksCompute.attach_configuration(resource_group=db_resource_group,
                                                        workspace_name=db_workspace_name,
