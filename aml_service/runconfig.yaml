@@ -1,0 +1,12 @@
+environment:
+  databricks:
+    pypiLibraries:
+    - package: beautifulsoup4
+    - package: numpy
+    - package: pandas
+    - package: tensorflow==2.0.0
+    - package: keras==2.3.1
+    - package: azureml-sdk
+    - package: azureml-dataprep[pandas]
+    - package: onnxmltools==1.6.0
+    - package: onnxruntime==1.2.0
